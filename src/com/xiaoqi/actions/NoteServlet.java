@@ -65,6 +65,9 @@ public class NoteServlet extends HttpServlet {
 			noteId = buffer.toString().split(":")[0];
 			followerPhone = buffer.toString().split(":")[1];
 			System.out.println(noteId+":"+followerPhone);
+//			if(followerPhone == null) {
+//				
+//			}
 			//取得Application对象  
 	        ServletContext application = this.getServletContext();  
 	        //设置Application属性  
@@ -100,11 +103,13 @@ public class NoteServlet extends HttpServlet {
 			followedPhone = rs.getString("phone");
 			images = rs.getString("images");
 			
-			sql = "select * from users where phone = '" + followerPhone + "'";
-			rs = dbUtil.queryDate(sql);
-			rs.next();
-			avatar = rs.getString("avatar");
-			name = rs.getString("name");
+			if(followerPhone != null) {
+				sql = "select * from users where phone = '" + followerPhone + "'";
+				rs = dbUtil.queryDate(sql);
+				rs.next();
+				avatar = rs.getString("avatar");
+				name = rs.getString("name");
+			}
 			
 			//获取当前的站点根目录
 			String path = getServletContext().getContextPath();

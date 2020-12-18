@@ -15,6 +15,18 @@ public class Note {
     public Note() {
     }
 
+	public Note(String authorPhone, String images, String title, String content, String topic, String date,
+			String area) {
+		super();
+		this.authorPhone = authorPhone;
+		this.images = images;
+		this.title = title;
+		this.content = content;
+		this.topic = topic;
+		this.date = date;
+		this.area = area;
+	}
+
 	public Note(int noteId, String authorPhone, String images, String title, String content, String topic, String date,
 			String area) {
 		super();

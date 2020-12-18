@@ -3,6 +3,11 @@ package com.xiaoqi.actions;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.xiaoqi.entitys.DialogueMain;
 import com.xiaoqi.entitys.Note;
 import com.xiaoqi.entitys.NoteInfo;
 import com.xiaoqi.entitys.User;
@@ -88,6 +94,31 @@ public class HomeServlet extends HttpServlet {
 				}
 			}
 		}
+		
+		Collections.sort(notes, new Comparator<Note>() {  
+			@Override
+			public int compare(Note note1, Note note2) {
+				//格式化时间
+		        SimpleDateFormat CurrentTime= new SimpleDateFormat("yyyy-MM-dd");
+		        String date1 = note1.getDate();
+		        String date2 = note2.getDate();
+		        try {
+		            Date dateTime1 = CurrentTime.parse(date1);
+		            Date dateTime2 = CurrentTime.parse(date2);
+		            if (dateTime1.getTime() > dateTime2.getTime()) {  
+	                    return -1;  
+	                }  
+	                if (dateTime1.getTime() == dateTime2.getTime()) {  
+	                    return 0;  
+	                }
+		 
+		        } catch (ParseException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		        }
+		        return 1;  
+            }
+        });  
 
 		noteInfo.setNotes(notes);
 		//把对象转换成JSON串
